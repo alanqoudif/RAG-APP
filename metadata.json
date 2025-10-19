@@ -1,0 +1,5 @@
+{
+  "name": "Student Guide Q&A",
+  "description": "An AI-powered chat assistant that answers questions based on the content of the Student Guide 2025.",
+  "requestFramePermissions": []
+}
