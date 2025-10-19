@@ -3,8 +3,8 @@ import React from 'react';
 import { ChatMessage, Document } from '../types';
 
 const UserIcon: React.FC = () => (
-    <div className="w-8 h-8 rounded-full bg-indigo-500 flex-shrink-0 flex items-center justify-center font-bold">
-        U
+    <div className="w-8 h-8 rounded-full bg-violet-500 flex-shrink-0 flex items-center justify-center font-bold">
+        م
     </div>
 );
 
@@ -18,7 +18,7 @@ const ModelIcon: React.FC = () => (
 
 const SourcePill: React.FC<{ source: Document }> = ({ source }) => (
     <div className="bg-gray-700 text-xs text-gray-300 rounded-full px-3 py-1 transition-colors hover:bg-gray-600" title={source.content}>
-        {source.title}{source.pageNumber && ` (Page ${source.pageNumber})`}
+        {source.title}{source.pageNumber && ` (صفحة ${source.pageNumber})`}
     </div>
 );
 
@@ -26,13 +26,13 @@ const MessageDisplay: React.FC<{ messages: ChatMessage[] }> = ({ messages }) => 
     return (
         <div className="space-y-6 max-w-4xl mx-auto w-full">
             {messages.map((msg, index) => (
-                <div key={index} className={`flex items-start gap-3 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                <div key={index} className={`flex items-start gap-3 ${msg.role === 'user' ? 'justify-start' : 'justify-end'} animate-fade-in-up`}>
                     {msg.role === 'model' && <ModelIcon />}
-                    <div className={`rounded-2xl p-4 max-w-2xl ${msg.role === 'user' ? 'bg-indigo-600 rounded-br-none' : 'bg-gray-800 rounded-bl-none'}`}>
+                    <div className={`rounded-2xl p-4 max-w-2xl ${msg.role === 'user' ? 'bg-violet-600 rounded-bl-none' : 'bg-gray-800 rounded-br-none'}`}>
                         <div className="prose prose-invert prose-sm max-w-none text-gray-200" dangerouslySetInnerHTML={{ __html: msg.content.replace(/\n/g, '<br />') }} />
                         {msg.sources && msg.sources.length > 0 && (
                             <div className="mt-4 border-t border-gray-700 pt-3">
-                                <h4 className="text-xs font-semibold text-gray-400 mb-2">Sources:</h4>
+                                <h4 className="text-xs font-semibold text-gray-400 mb-2">المصادر:</h4>
                                 <div className="flex flex-wrap gap-2">
                                     {msg.sources.map(source => <SourcePill key={source.id} source={source} />)}
                                 </div>

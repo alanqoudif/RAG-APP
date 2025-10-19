@@ -25,13 +25,13 @@ const App: React.FC = () => {
       setError(null);
       setMessages([{
         role: 'model',
-        content: "Initializing and loading the Student Guide 2025... Please wait.",
+        content: "جاري تهيئة وتحميل دليل الطالب 2025... يرجى الانتظار.",
       }]);
       
       try {
         const response = await fetch('/StudentGuide2025_compressed.pdf');
         if (!response.ok) {
-            throw new Error(`Failed to fetch PDF: ${response.statusText}`);
+            throw new Error(`فشل في جلب ملف PDF: ${response.statusText}`);
         }
         const arrayBuffer = await response.arrayBuffer();
         const pdf = await pdfjsLib.getDocument(arrayBuffer).promise;
@@ -60,15 +60,15 @@ const App: React.FC = () => {
 
         setMessages([{
             role: 'model',
-            content: `Hello! I have loaded the "Student Guide 2025". You can now ask me any questions about its content.`,
+            content: `أهلاً بك! لقد قمت بتحميل "دليل الطالب 2025". يمكنك الآن طرح أي أسئلة حول محتوياته.`,
         }]);
 
       } catch (e) {
-          const errorMessage = e instanceof Error ? e.message : 'Failed to load the default PDF document.';
+          const errorMessage = e instanceof Error ? e.message : 'فشل في تحميل مستند PDF الافتراضي.';
           setError(errorMessage);
           setMessages([{
               role: 'model',
-              content: `Sorry, I encountered an error while loading the guide: ${errorMessage}. Please try refreshing the page.`
+              content: `عذراً، حدث خطأ أثناء تحميل الدليل: ${errorMessage}. يرجى محاولة تحديث الصفحة.`
           }]);
       } finally {
           setIsInitializing(false);
@@ -94,7 +94,7 @@ const App: React.FC = () => {
     if (documents.length === 0) {
         const errorResponse: ChatMessage = {
             role: 'model',
-            content: "The knowledge base is not loaded. Please ensure the Student Guide is available and refresh the page."
+            content: "لم يتم تحميل قاعدة المعرفة. يرجى التأكد من توفر دليل الطالب وتحديث الصفحة."
         };
         setMessages((prevMessages) => [...prevMessages, errorResponse]);
         return;
@@ -105,32 +105,32 @@ const App: React.FC = () => {
       const modelMessage: ChatMessage = { role: 'model', content: answer, sources };
       setMessages((prevMessages) => [...prevMessages, modelMessage]);
     } catch (e) {
-      const errorMessage = e instanceof Error ? e.message : 'An unknown error occurred.';
+      const errorMessage = e instanceof Error ? e.message : 'حدث خطأ غير معروف.';
       setError(errorMessage);
       const errorResponse: ChatMessage = {
         role: 'model',
-        content: `Sorry, I encountered an error: ${errorMessage}`
+        content: `عذراً، حدث خطأ: ${errorMessage}`
       };
       setMessages((prevMessages) => [...prevMessages, errorResponse]);
     }
   };
 
   return (
-    <div className="flex flex-col h-screen bg-gray-900 text-gray-100 font-sans">
+    <div className="flex flex-col h-screen bg-gradient-to-br from-gray-900 to-slate-900 text-gray-100 font-sans">
       <Header />
       <main ref={chatContainerRef} className="flex-1 overflow-y-auto p-4 md:p-6 space-y-6">
         <MessageDisplay messages={messages} />
         {(isLoading || isInitializing) && (
           <div className="flex justify-start">
               <div className="bg-gray-800 rounded-2xl p-4 max-w-2xl flex items-center space-x-2">
-                  <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse [animation-delay:-0.3s]"></div>
-                  <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse [animation-delay:-0.15s]"></div>
-                  <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+                  <div className="w-2 h-2 bg-violet-400 rounded-full animate-pulse [animation-delay:-0.3s]"></div>
+                  <div className="w-2 h-2 bg-violet-400 rounded-full animate-pulse [animation-delay:-0.15s]"></div>
+                  <div className="w-2 h-2 bg-violet-400 rounded-full animate-pulse"></div>
               </div>
           </div>
         )}
       </main>
-      <footer className="border-t border-gray-700 p-4 bg-gray-900/80 backdrop-blur-sm">
+      <footer className="border-t border-gray-700 p-4 bg-gray-900/50 backdrop-blur-sm">
         <div className="max-w-4xl mx-auto">
             <ChatInput onSendMessage={handleSendMessage} isLoading={isLoading || isInitializing} />
         </div>
